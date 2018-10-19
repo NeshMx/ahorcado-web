@@ -28,7 +28,7 @@
       <!-- Abecedario -->
       <b-row class="text-center">
         <b-col>
-          <b-button-group>
+          <b-button-group class="flex-wrap">
             <b-button v-for="(letra, index) in abecedario" :key="index">{{letra}}</b-button>
           </b-button-group>
         </b-col>
@@ -46,24 +46,24 @@ export default {
       pistaSeleccionada: "",
       diccionario: [
         {
-          palabra: "test",
-          pista: "this 'test' hint"
+          palabra: "perro",
+          pista: "Soy el mejor amigo del hombre"
         },
         {
-          palabra: "test2",
-          pista: "this 'test2' hint"
+          palabra: "gato",
+          pista: "Soy el felino más amigable"
         },
         {
-          palabra: "test3",
-          pista: "this 'test3' hint"
+          palabra: "abeja",
+          pista: "Tengo alas y produzco miel"
         },
         {
-          palabra: "test4",
-          pista: "this 'test4' hint"
+          palabra: "conejo",
+          pista: "Corro muy rápido y tengo grandes orejas"
         },
         {
-          palabra: "test5",
-          pista: "this 'test5' hint"
+          palabra: "caballo",
+          pista: "Tengo muy buena vista y corro carreras"
         }
       ],
       abecedario: [
@@ -256,7 +256,9 @@ export default {
       }
       return guiones.join(" ");
     },
-    checaLetrasEnPalabra: function() {}
+    checaLetrasEnPalabra: function() {
+      console.log(this.palabraSeleccionada.includes("a"));
+    }
   }
 };
 </script>
