@@ -10,13 +10,19 @@
       <!-- Lineas/Letras -->
       <b-row class="text-center">
         <b-col>
+          <span class="categoria">La categoría es: animales</span>
+        </b-col>
+      </b-row>
+      <!-- Lineas/Letras -->
+      <b-row class="text-center">
+        <b-col>
           <span class="guiones">{{dibujaGuionesBajos()}}</span>
         </b-col>
       </b-row>
       <!-- Pistas -->
       <b-row class="text-center">
         <b-col>
-          <span class="pista">{{pistaSeleccionada}}</span>
+          <span class="pista">Pista: {{pistaSeleccionada}}</span>
         </b-col>
       </b-row>
       <!-- Vidas -->
@@ -29,8 +35,18 @@
       <b-row class="text-center">
         <b-col>
           <b-button-group class="flex-wrap">
-            <b-button v-for="(letra, index) in abecedario" :key="index">{{letra}}</b-button>
+            <b-button v-for="(letra, index) in abecedario" :key="index" @click="checaLetrasEnPalabra($event)">{{letra}}</b-button>
           </b-button-group>
+        </b-col>
+      </b-row>
+      <!-- Alertas -->
+      <b-row class="text-center">
+        <b-col>
+          <b-row align-h="center">
+            <b-col cols="9">
+              <div id="alerta"></div>
+            </b-col>
+          </b-row>
         </b-col>
       </b-row>
     </b-container>
@@ -41,6 +57,7 @@ export default {
   name: "ahorcado",
   data: function() {
     return {
+      showDismissibleAlert: false,
       vidas: 10,
       palabraSeleccionada: "",
       pistaSeleccionada: "",
@@ -97,8 +114,13 @@ export default {
       ]
     };
   },
+  computed: {
+    esValido() {
+      return this.valorInput.length < 2 ? true : false;
+    }
+  },
   mounted: function() {
-    this.checaLetrasEnPalabra();
+    this.seleccionaPalabraPistaAleatorio(this.diccionario);
   },
   methods: {
     dibujaLineaVertical: function() {
@@ -246,25 +268,69 @@ export default {
       var randomIndex = Math.floor(Math.random() * palabras.length);
       this.palabraSeleccionada = palabras[randomIndex];
       this.pistaSeleccionada = pistas[randomIndex];
-      return this.palabraSeleccionada;
     },
     dibujaGuionesBajos: function() {
-      var palabra = this.seleccionaPalabraPistaAleatorio(this.diccionario);
+      var palabra = this.palabraSeleccionada;
       var guiones = [];
       for (let index = 0; index < palabra.length; index++) {
         guiones.push("_");
       }
       return guiones.join(" ");
     },
-    checaLetrasEnPalabra: function() {
-      console.log(this.palabraSeleccionada.includes("a"));
+    checaLetrasEnPalabra: function(e) {
+      var arregloFunciones = [
+        this.dibujaLineaVertical,
+        this.dibujaLineaHorizontal,
+        this.dibujaLineaDiagonal,
+        this.dibujaLineaVerticalCorta,
+        this.dibujaCabeza,
+        this.dibujaCuerpo,
+        this.dibujaBrazoIzquierdo,
+        this.dibujaBrazoDerecho,
+        this.dibujaPieIzquierdo,
+        this.dibujaPieDerecho
+      ];
+      var valor = e.target.innerHTML;
+      if (!this.palabraSeleccionada.includes(valor)) {
+        arregloFunciones[arregloFunciones.length - this.vidas]();
+        this.vidas--;
+      } else {
+        var guiones = document
+          .getElementsByClassName("guiones")[0]
+          .innerText.split(" ");
+        var palabraTmp = guiones.slice(0);
+
+        var obtenIndex = function(str, char) {
+          return str
+            .split("")
+            .map(function(c, i) {
+              if (c == char) return i;
+            })
+            .filter(function(v) {
+              return v >= 0;
+            });
+        };
+
+        var indices = obtenIndex(this.palabraSeleccionada, valor);
+
+        console.log(palabraTmp);
+        console.log(indices);
+      }
     }
   }
 };
 </script>
 <style scoped>
+.ahorcado {
+  padding-bottom: 100px;
+}
+
 .guiones {
   font-size: 4em;
+}
+
+.categoria {
+  font-size: 2em;
 }
 
 .pista {
@@ -272,6 +338,10 @@ export default {
 }
 
 .vidas {
+  font-size: 2em;
+}
+
+.etiqueta {
   font-size: 2em;
 }
 </style>
