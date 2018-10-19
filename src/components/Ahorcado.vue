@@ -10,19 +10,19 @@
       <!-- Lineas/Letras -->
       <b-row class="text-center">
         <b-col>
-          <span>{{dibujaGuionesBajos()}}</span>
+          <span class="guiones">{{dibujaGuionesBajos()}}</span>
         </b-col>
       </b-row>
       <!-- Pistas -->
       <b-row class="text-center">
         <b-col>
-          <span>{{pistaSeleccionada}}</span>
+          <span class="pista">{{pistaSeleccionada}}</span>
         </b-col>
       </b-row>
       <!-- Vidas -->
       <b-row class="text-center">
         <b-col>
-          <p></p>
+          <span class="vidas">Te quedan {{vidas}} vidas restantes</span>
         </b-col>
       </b-row>
       <!-- Abecedario -->
@@ -81,11 +81,13 @@ export default {
         "l",
         "m",
         "n",
+        "ñ",
         "o",
         "p",
         "q",
         "r",
         "s",
+        "t",
         "u",
         "v",
         "w",
@@ -95,7 +97,9 @@ export default {
       ]
     };
   },
-  mounted: function() {},
+  mounted: function() {
+    this.checaLetrasEnPalabra();
+  },
   methods: {
     dibujaLineaVertical: function() {
       var canvas = document.getElementById("canvas1");
@@ -251,9 +255,21 @@ export default {
         guiones.push("_");
       }
       return guiones.join(" ");
-    }
+    },
+    checaLetrasEnPalabra: function() {}
   }
 };
 </script>
 <style scoped>
+.guiones {
+  font-size: 4em;
+}
+
+.pista {
+  font-size: 2em;
+}
+
+.vidas {
+  font-size: 2em;
+}
 </style>
