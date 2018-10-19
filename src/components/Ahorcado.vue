@@ -10,13 +10,13 @@
       <!-- Lineas/Letras -->
       <b-row class="text-center">
         <b-col>
-          <span>{{drawUnderscores()}}</span>
+          <span>{{dibujaGuionesBajos()}}</span>
         </b-col>
       </b-row>
       <!-- Pistas -->
       <b-row class="text-center">
         <b-col>
-
+          <span>{{pistaSeleccionada}}</span>
         </b-col>
       </b-row>
       <!-- Vidas -->
@@ -39,11 +39,11 @@
 <script>
 export default {
   name: "ahorcado",
-  props: {
-    vidas: Number
-  },
   data: function() {
     return {
+      vidas: 10,
+      palabraSeleccionada: "",
+      pistaSeleccionada: "",
       diccionario: [
         {
           palabra: "test",
@@ -97,85 +97,85 @@ export default {
   },
   mounted: function() {},
   methods: {
-    drawVerticalLine: function() {
+    dibujaLineaVertical: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.moveTo(0, 0);
-        context.lineTo(0, 300); // vertical line
+        context.lineTo(0, 300);
         context.strokeStyle = "brown";
         context.stroke();
       }
     },
-    drawHorizontalLine: function() {
+    dibujaLineaHorizontal: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.moveTo(0, 0);
-        context.lineTo(280, 0); // horizontal line
+        context.lineTo(280, 0);
         context.strokeStyle = "brown";
         context.stroke();
       }
     },
-    drawDiagonalLine: function() {
+    dibujaLineaDiagonal: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.moveTo(0, 50);
-        context.lineTo(50, 0); // diagonal line
+        context.lineTo(50, 0);
         context.strokeStyle = "brown";
         context.stroke();
       }
     },
-    drawVerticalShortLine: function() {
+    dibujaLineaVerticalCorta: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.moveTo(200, 0);
-        context.lineTo(200, 20); // vertical short line
+        context.lineTo(200, 20);
         context.strokeStyle = "brown";
         context.stroke();
       }
     },
-    drawHead: function() {
+    dibujaCabeza: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
+        // Cabeza
         var context = canvas.getContext("2d");
         context.beginPath();
-        context.fillStyle = "bisque"; // #ffe4c4
-        context.arc(200, 50, 30, 0, Math.PI * 2, true); // draw circle for head
-        // (x,y) center, radius, start angle, end angle, anticlockwise
+        context.fillStyle = "bisque";
+        context.arc(200, 50, 30, 0, Math.PI * 2, true);
         context.fill();
 
-        // smile
+        // Sonrisa
         context.beginPath();
-        context.strokeStyle = "red"; // color
+        context.strokeStyle = "red";
         context.lineWidth = 3;
-        context.arc(200, 50, 20, 0, Math.PI, false); // draw semicircle for smiling
+        context.arc(200, 50, 20, 0, Math.PI, false);
         context.stroke();
 
-        // eyes
+        // Ojos
         context.beginPath();
-        context.fillStyle = "green"; // color
-        context.arc(190, 45, 3, 0, Math.PI * 2, true); // draw left eye
+        context.fillStyle = "green";
+        context.arc(190, 45, 3, 0, Math.PI * 2, true);
         context.fill();
-        context.arc(210, 45, 3, 0, Math.PI * 2, true); // draw right eye
+        context.arc(210, 45, 3, 0, Math.PI * 2, true);
         context.fill();
       }
     },
-    drawBody: function() {
+    dibujaCuerpo: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.moveTo(200, 80);
@@ -184,34 +184,34 @@ export default {
         context.stroke();
       }
     },
-    drawLeftArm: function() {
+    dibujaBrazoIzquierdo: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
-        context.strokeStyle = "#0000ff"; // blue
+        context.strokeStyle = "#0000ff";
         context.moveTo(200, 80);
         context.lineTo(150, 130);
         context.stroke();
       }
     },
-    drawRightArm: function() {
+    dibujaBrazoDerecho: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
-        context.strokeStyle = "#0000ff"; // blue
+        context.strokeStyle = "#0000ff";
         context.moveTo(200, 80);
         context.lineTo(250, 130);
         context.stroke();
       }
     },
-    drawLeftFoot: function() {
+    dibujaPieIzquierdo: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.strokeStyle = "orange";
@@ -220,10 +220,10 @@ export default {
         context.stroke();
       }
     },
-    drawRightFoot: function() {
+    dibujaPieDerecho: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
-        // Check HTML5 canvas support
+        // Verifica soporte de canvas
         var context = canvas.getContext("2d");
         context.beginPath();
         context.strokeStyle = "orange";
@@ -232,17 +232,20 @@ export default {
         context.stroke();
       }
     },
-    selectRandomWord: function(diccionario) {
+    seleccionaPalabraPistaAleatorio: function(diccionario) {
       var palabras = [];
+      var pistas = [];
       for (const palabra in diccionario) {
         palabras.push(diccionario[palabra].palabra);
+        pistas.push(diccionario[palabra].pista);
       }
       var randomIndex = Math.floor(Math.random() * palabras.length);
-      var palabraSeleccionada = palabras[randomIndex];
-      return palabraSeleccionada;
+      this.palabraSeleccionada = palabras[randomIndex];
+      this.pistaSeleccionada = pistas[randomIndex];
+      return this.palabraSeleccionada;
     },
-    drawUnderscores: function() {
-      var palabra = this.selectRandomWord(this.diccionario);
+    dibujaGuionesBajos: function() {
+      var palabra = this.seleccionaPalabraPistaAleatorio(this.diccionario);
       var guiones = [];
       for (let index = 0; index < palabra.length; index++) {
         guiones.push("_");
