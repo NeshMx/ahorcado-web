@@ -57,7 +57,7 @@ export default {
   name: "ahorcado",
   data: function() {
     return {
-      showDismissibleAlert: false,
+      guiones: [],
       vidas: 10,
       palabraSeleccionada: "",
       pistaSeleccionada: "",
@@ -298,7 +298,6 @@ export default {
         var guiones = document
           .getElementsByClassName("guiones")[0]
           .innerText.split(" ");
-        var palabraTmp = guiones.slice(0);
 
         var obtenIndex = function(str, char) {
           return str
@@ -313,8 +312,15 @@ export default {
 
         var indices = obtenIndex(this.palabraSeleccionada, valor);
 
-        console.log(palabraTmp);
-        console.log(indices);
+        console.log(guiones);
+
+        console.log("posiciones a modificar", indices);
+
+        for (let i = 0; i < indices.length; i++) {
+          guiones.splice(indices[i], indices.length, valor);
+        }
+
+        console.log("arreglo modificado", guiones);
       }
     }
   }
