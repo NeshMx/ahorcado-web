@@ -16,7 +16,7 @@
       <!-- Lineas/Letras -->
       <b-row class="text-center">
         <b-col>
-          <span class="guiones">{{dibujaGuionesBajos()}}</span>
+          <span class="guiones">{{guiones.join(" ")}}</span>
         </b-col>
       </b-row>
       <!-- Pistas -->
@@ -121,6 +121,7 @@ export default {
   },
   mounted: function() {
     this.seleccionaPalabraPistaAleatorio(this.diccionario);
+    this.dibujaGuionesBajos();
   },
   methods: {
     dibujaLineaVertical: function() {
@@ -271,11 +272,9 @@ export default {
     },
     dibujaGuionesBajos: function() {
       var palabra = this.palabraSeleccionada;
-      var guiones = [];
       for (let index = 0; index < palabra.length; index++) {
-        guiones.push("_");
+        this.guiones.push("_");
       }
-      return guiones.join(" ");
     },
     checaLetrasEnPalabra: function(e) {
       var arregloFunciones = [
