@@ -294,9 +294,9 @@ export default {
         arregloFunciones[arregloFunciones.length - this.vidas]();
         this.vidas--;
       } else {
-        var guiones = document
-          .getElementsByClassName("guiones")[0]
-          .innerText.split(" ");
+        // var guiones = document
+        //   .getElementsByClassName("guiones")[0]
+        //   .innerText.split(" ");
 
         var obtenIndex = function(str, char) {
           return str
@@ -311,15 +311,15 @@ export default {
 
         var indices = obtenIndex(this.palabraSeleccionada, valor);
 
-        console.log(guiones);
+        console.log(this.guiones);
 
         console.log("posiciones a modificar", indices);
 
         for (let i = 0; i < indices.length; i++) {
-          guiones.splice(indices[i], indices.length, valor);
+          this.guiones.splice(indices[i], indices.length, valor);
         }
 
-        console.log("arreglo modificado", guiones);
+        console.log("arreglo modificado", this.guiones);
       }
     }
   }
