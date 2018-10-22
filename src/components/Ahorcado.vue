@@ -44,9 +44,16 @@
         <b-col>
           <b-row align-h="center">
             <b-col cols="9">
-              <div id="alerta"></div>
+              <b-alert variant="success" dismissible show v-if="!guiones.join().includes('_')">¡Felicidades, GANASTE!</b-alert>
+              <b-alert variant="danger" dismissible show v-if="vidas == 0">¡Ups! Perdiste, juega de nuevo</b-alert>
             </b-col>
           </b-row>
+        </b-col>
+      </b-row>
+      <!-- Botón de juevo -->
+      <b-row class="text-center">
+        <b-col>
+          <b-button v-if="vidas == 0 | !guiones.join().includes('_')" @click="init">Juego nuevo</b-button>
         </b-col>
       </b-row>
     </b-container>
@@ -57,6 +64,7 @@ export default {
   name: "ahorcado",
   data: function() {
     return {
+      juegoNuevo: false,
       guiones: [],
       vidas: 10,
       palabraSeleccionada: "",
@@ -120,10 +128,20 @@ export default {
     }
   },
   mounted: function() {
-    this.seleccionaPalabraPistaAleatorio(this.diccionario);
-    this.dibujaGuionesBajos();
+    this.init();
   },
   methods: {
+    init: function() {
+      this.guiones = [];
+      this.vidas = 10;
+      this.seleccionaPalabraPistaAleatorio(this.diccionario);
+      this.dibujaGuionesBajos();
+      var canvas = document.getElementById("canvas1");
+      if (canvas.getContext("2d")) {
+        var context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    },
     dibujaLineaVertical: function() {
       var canvas = document.getElementById("canvas1");
       if (canvas.getContext("2d")) {
@@ -294,10 +312,6 @@ export default {
         arregloFunciones[arregloFunciones.length - this.vidas]();
         this.vidas--;
       } else {
-        // var guiones = document
-        //   .getElementsByClassName("guiones")[0]
-        //   .innerText.split(" ");
-
         var obtenIndex = function(str, char) {
           return str
             .split("")
@@ -311,15 +325,9 @@ export default {
 
         var indices = obtenIndex(this.palabraSeleccionada, valor);
 
-        console.log(this.guiones);
-
-        console.log("posiciones a modificar", indices);
-
         for (let i = 0; i < indices.length; i++) {
-          this.guiones.splice(indices[i], indices.length, valor);
+          this.guiones.splice(indices[i], 1, valor);
         }
-
-        console.log("arreglo modificado", this.guiones);
       }
     }
   }
